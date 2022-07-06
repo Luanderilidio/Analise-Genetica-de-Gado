@@ -141,6 +141,38 @@ gado = [
         'genero': 'M',
         'indices': [random.randint(1, 10), random.randint(1, 10), random.randint(1, 10)]
     },
+    {
+        "id": 17,
+        "vitamina": "A",
+        "nome": "A17",
+        "nasc": "11/02/2022",
+        'genero': 'F',
+        'indices': [random.randint(1, 10), random.randint(1, 10), random.randint(1, 10)]
+    },
+    {
+        "id": 18,
+        "vitamina": "A",
+        "nome": "A16",
+        "nasc": "11/02/2022",
+        'genero': 'M',
+        'indices': [random.randint(1, 10), random.randint(1, 10), random.randint(1, 10)]
+    },
+    {
+        "id": 19,
+        "vitamina": "A",
+        "nome": "A16",
+        "nasc": "11/02/2022",
+        'genero': 'F',
+        'indices': [random.randint(1, 10), random.randint(1, 10), random.randint(1, 10)]
+    },
+    {
+        "id": 20,
+        "vitamina": "A",
+        "nome": "A16",
+        "nasc": "11/02/2022",
+        'genero': 'F',
+        'indices': [random.randint(1, 10), random.randint(1, 10), random.randint(1, 10)]
+    },
 ]
 
 g = Graph(directed=False)
@@ -197,17 +229,6 @@ cores = [
     {'id': 5, 'color': 'red'},
 ]
 
-femeas = []
-machos = []
-for x in gado:
-    if x['genero'] == 'F':
-        femeas.append(x)
-    else:
-        {
-            machos.append(x)
-        }
-# print(femeas, machos)
-
 
 def med_indice(indices):
     soma = 0
@@ -238,40 +259,34 @@ def med_indice(indices):
 
 
 def relaciona(xgraph):
+
     lista_m = []
     lista_f = []
     for x in g.vs:
         if x.attributes()['genero'] == 'M':
             lista_m.append(x)
+
         else:
             lista_f.append(x)
     for u in lista_m:
-
         media_m = med_indice(u['indices'])
         for i in lista_f:
-            print(u.attributes()['nome'], i.attributes()['nome'])
             media_f = med_indice(i['indices'])
             if media_m['media'] == media_f['media']:
-
-                print(media_m['media'], u.attributes()[
-                      'nome'], i.attributes()['nome'], media_f['media'])
-                edges = xgraph.incident(u['id'])
-                print(edges)
-                for x in edges:
-                    aresta = xgraph.es[x]
-                    if u.attributes()['id'] == xgraph.vs[aresta.source].attributes()['id'] and i.attributes()['id'] == xgraph.vs[aresta.target].attributes()['id']:
-                        xgraph.es[x]['color'] = media_m['color']
-                        print(xgraph.vs[aresta.source].attributes()['nome'],
-                              aresta, xgraph.vs[aresta.target].attributes()['nome'])
+                aresta = xgraph.get_eid(u['id'], i['id'])
+                xgraph.es[aresta]['color'] = media_m['color']
+                print(u.attributes()['nome'],
+                      media_m['media'], aresta, i.attributes()['nome'])
 
     plot_graph(xgraph)
 
 
-# relaciona(g)
+relaciona(g)
 
 
 def basico(xgraph):
-
+    for x in g.es:
+        x['color'] = 'white'
     lista_m = []
     lista_f = []
     for x in g.vs:
@@ -280,23 +295,14 @@ def basico(xgraph):
         else:
             lista_f.append(x)
     for u in lista_m:
-
         media_m = med_indice(u['indices'])
         for i in lista_f:
-            print(u.attributes()['nome'], i.attributes()['nome'])
             media_f = med_indice(i['indices'])
             if media_m['media'] == media_f['media']:
-
-                print(media_m['media'], u.attributes()[
-                      'nome'], i.attributes()['nome'], media_f['media'])
-                edges = xgraph.incident(u['id'])
-                print(edges)
-                for x in edges:
-                    aresta = xgraph.es[x]
-                    if u.attributes()['id'] == xgraph.vs[aresta.source].attributes()['id'] and i.attributes()['id'] == xgraph.vs[aresta.target].attributes()['id']:
-                        xgraph.es[x]['color'] = media_m['color']
-                        print(xgraph.vs[aresta.source].attributes()['nome'],
-                              aresta, xgraph.vs[aresta.target].attributes()['nome'])
+                aresta = xgraph.get_eid(u['id'], i['id'])
+                xgraph.es[aresta]['color'] = media_m['color']
+                print(u.attributes()['nome'],
+                      media_m['media'], aresta, i.attributes()['nome'])
 
     plot_graph(xgraph)
 
